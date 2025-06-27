@@ -29,4 +29,17 @@ export const getuser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+export const getusers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        const fileteredUsers = users.filter(user => user._id.toString() !== req.user._id.toString());
+        console.log(fileteredUsers);
+        res.json(users);
+    }
+    catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ message: error.message });
+
+    }
+};
 // Compare this snippet from backend/controllers/auth.controllers.js:
